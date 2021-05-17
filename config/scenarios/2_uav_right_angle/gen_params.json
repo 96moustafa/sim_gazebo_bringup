@@ -70,7 +70,7 @@
 			"gazebo_name": "tii_gazebo",
 			"autopilot_name": "PX4_MASTER",
 			"autopilot_build_type": "px4_sitl_rtps",
-			"spawn_pose": [0, 50, 0, 0, 0, -1.57],
+			"spawn_pose": [100, 50, 0, 0, 0, 3.14],
 			"generate_params":{
 				"base_model": "iris",
 				"sdf_version": "NotSet",

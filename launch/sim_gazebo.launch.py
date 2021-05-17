@@ -17,11 +17,42 @@ import sys
 import subprocess
 
 
-launch_path = os.path.realpath(__file__).replace("sim_gazebo.launch.py","")
-json_path = os.path.realpath(os.path.relpath(os.path.join(launch_path,"../config")))
-ros2_ws = os.path.realpath(os.path.relpath(os.path.join(launch_path,"../../..")))
-gazebo_model_reset_env=False
-gazebo_plugin_reset_env=False
+launch_path = os.path.realpath(__file__).replace("sim_gazebo.launch.py", "")
+
+# path of the default config file
+json_path = os.path.realpath(os.path.relpath(
+    os.path.join(launch_path, "../config")))
+
+# this path is where px4 repo and tii_gazebo repo will be cloned
+ros2_ws = os.path.realpath(os.path.relpath(
+    os.path.join(launch_path, "../../../../..")))
+
+# this path contains the a directory for with a config file of each scenario and their plan files
+scenarios_path = os.path.realpath(os.path.relpath(
+    os.path.join(launch_path, "../config/scenarios")))
+
+# parse the scenarios directory for the available scenarios
+available_scenarios = sorted(os.listdir(scenarios_path))
+
+# list the available scenarios
+print("The available scenarios are:")
+for num, scenario in enumerate(available_scenarios):
+    print("{:d}) {:s}".format(num, scenario))
+
+# prompt for the choosen scenario
+scenario_num = 0
+while True:
+    scenario_num = int(input("Enter the number of the required scenario: "))
+    if scenario_num in range(len(available_scenarios)):
+	    break
+
+
+# change json_path if one of the availbe scenarios is chosen
+json_path = "{:s}/{:s}".format(scenarios_path,
+                               available_scenarios[scenario_num])
+
+gazebo_model_reset_env = False
+gazebo_plugin_reset_env = False
 
 
 with open('{:s}/gen_params.json'.format(json_path)) as json_file:
