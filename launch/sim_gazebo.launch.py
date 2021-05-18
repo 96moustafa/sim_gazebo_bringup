@@ -23,13 +23,21 @@ launch_path = os.path.realpath(__file__).replace("sim_gazebo.launch.py", "")
 json_path = os.path.realpath(os.path.relpath(
     os.path.join(launch_path, "../config")))
 
-# this path is where px4 repo and tii_gazebo repo will be cloned
 ros2_ws = os.path.realpath(os.path.relpath(
-    os.path.join(launch_path, "../../../../..")))
+    os.path.join(launch_path, "../../../")))
+
+# this path is where px4 repo and tii_gazebo repo will be cloned
+ros2_ws_parent = os.path.realpath(os.path.relpath(
+    os.path.join(launch_path, "../../../..")))
 
 # this path contains the a directory for with a config file of each scenario and their plan files
 scenarios_path = os.path.realpath(os.path.relpath(
     os.path.join(launch_path, "../config/scenarios")))
+
+print("launch_path: " + launch_path)
+print("json_path: " + json_path)
+print("ros2_ws: " + ros2_ws)
+print("scenarios_path: " + scenarios_path)
 
 # parse the scenarios directory for the available scenarios
 available_scenarios = sorted(os.listdir(scenarios_path))
@@ -51,6 +59,8 @@ while True:
 json_path = "{:s}/{:s}".format(scenarios_path,
                                available_scenarios[scenario_num])
 
+print("chosen scenario path: " + json_path)
+
 gazebo_model_reset_env = False
 gazebo_plugin_reset_env = False
 
@@ -68,7 +78,7 @@ generate_world_params = world_params["generate_params"]
 
 for repo in setup_gazebo["gazebo_models"]:
     gazebo_repo = setup_gazebo["gazebo_models"][repo]
-    gazebo_repo_path = '{:s}/{:s}'.format(ros2_ws, 
+    gazebo_repo_path = '{:s}/{:s}'.format(ros2_ws_parent, 
         gazebo_repo["name"])
     if not os.path.isdir(gazebo_repo_path):
         clone_cmd = 'git clone -b {:s} {:s} {:s}'.format(
@@ -93,7 +103,7 @@ for repo in setup_gazebo["gazebo_models"]:
 
 for build in setup_autopilot:
     autopilot_build = setup_autopilot[build]
-    autopilot_path = '{:s}/{:s}'.format(ros2_ws, 
+    autopilot_path = '{:s}/{:s}'.format(ros2_ws_parent, 
         autopilot_build["name"])
     autopilot_build_path = '{:s}/build/{:s}'.format(autopilot_path, 
         autopilot_build["build_type"])
@@ -161,7 +171,7 @@ if world_params["generate_world"]:
             str(generate_world_params[params]))
 
     generate_world_cmd = 'python3 {:s}/{:s}/scripts/jinja_world_gen.py{:s}'.format(
-        ros2_ws, world_params["gazebo_name"], generate_world_args
+        ros2_ws_parent, world_params["gazebo_name"], generate_world_args
         ).replace("\n","").replace("    ","")
 
     world_cmd_popen=shlex.split(generate_world_cmd)
@@ -177,7 +187,7 @@ if world_params["generate_world"]:
     world_file_path='/tmp/{:s}.world'.format(generate_world_params["world_name"])
 
 else:
-    world_file_path='{:s}/{:s}/worlds/{:s}.world'.format(ros2_ws,
+    world_file_path='{:s}/{:s}/worlds/{:s}.world'.format(ros2_ws_parent,
         world_params["gazebo_name"],generate_world_params["world_name"])
 
 latitude = generate_world_params["latitude"]
@@ -225,7 +235,7 @@ def generate_launch_description():
                 params, str(generate_model_params[params]))
 
         generate_model = ['python3 {:s}/{:s}/scripts/jinja_model_gen.py{:s}'.format(
-            ros2_ws, models[model_params]["gazebo_name"], 
+            ros2_ws_parent, models[model_params]["gazebo_name"], 
             generate_model_args).replace("\n","").replace("    ","")]
 
         # Command to make storage folder
@@ -246,7 +256,7 @@ def generate_launch_description():
                         ).replace("\n","").replace("    ","")
 
         # Set path for PX4 build
-        px4_path = '{:s}/{:s}/build/{:s}'.format(ros2_ws,
+        px4_path = '{:s}/{:s}/build/{:s}'.format(ros2_ws_parent,
             models[model_params]["autopilot_name"],
             models[model_params]["autopilot_build_type"])
 

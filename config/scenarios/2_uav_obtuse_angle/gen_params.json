@@ -1,8 +1,8 @@
 {	"setup":{
 		"autopilot": {
 			"autopilot_build_params_0": {
-				"repo": "git@github.com:PX4/PX4-Autopilot.git",
-				"name": "PX4_MASTER",
+				"repo": "git@github.com:96moustafa/PX4-Autopilot-Avoidance.git",
+				"name": "PX4-Autopilot-Avoidance",
 				"version": "master",
 				"clone": 1,
 				"gazebo_plugins": 1,
@@ -48,7 +48,7 @@
 	"models": {
 		"model_params_0": {
 			"gazebo_name": "tii_gazebo",
-			"autopilot_name": "PX4_MASTER",
+			"autopilot_name": "PX4-Autopilot-Avoidance",
 			"autopilot_build_type": "px4_sitl_rtps",
 			"spawn_pose": [0, 0, 0, 0, 0, 1.57],
 			"generate_params":{
@@ -68,7 +68,7 @@
 		},
 		"model_params_1": {
 			"gazebo_name": "tii_gazebo",
-			"autopilot_name": "PX4_MASTER",
+			"autopilot_name": "PX4-Autopilot-Avoidance",
 			"autopilot_build_type": "px4_sitl_rtps",
 			"spawn_pose": [40, 80, 0, 0, 0, -2.355],
 			"generate_params":{
