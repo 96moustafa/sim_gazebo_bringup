@@ -111,37 +111,37 @@ Each scenario is described using a **gen_params.json** file in a separate direct
    ~/src/ros2_ws$ colcon build --symlink-install --packages-select sim_gazebo_bringup 
    ```
 3. Now you can run the sim_gazebo_bringup to launch PX4 instances in simulation.  
-```
-$ ros2 launch sim_gazebo_bringup sim_gazebo.launch.py 
-```
+    ```
+    $ ros2 launch sim_gazebo_bringup sim_gazebo.launch.py 
+    ```
 
- > Note: The first time you run the sim_gazebo.launch.py, it will clone a PX4-Autopilot with some modifications and a gazebo repository from Github in the parent directory of your ros2_ws directory. Therefore, it is important to have an SSH connection to your Github account. 
+    > Note: The first time you run the sim_gazebo.launch.py, it will clone a PX4-Autopilot with some modifications and a gazebo repository from Github in the parent directory of your ros2_ws directory. Therefore, it is important to have an SSH connection to your Github account. 
 
- 4. After running the script, it will parse the scenarios directories and you will be prompted to choose a scenario by entering its corresponding number.<br>
+ 4. After running the script, it will parse the scenarios directories and you will be prompted to choose a scenario by entering its corresponding number.
 
-```bash
-The available scenarios are: 
-0) 2_uav_acute_angle 
-1) 2_uav_head_on 
-2) 2_uav_obtuse_angle 
-3) 2_uav_right_angle 
-4) 4_uav_square 
-Enter the number of the required scenario: 4
-```
+    ```bash
+    The available scenarios are: 
+    0) 2_uav_acute_angle 
+    1) 2_uav_head_on 
+    2) 2_uav_obtuse_angle 
+    3) 2_uav_right_angle 
+    4) 4_uav_square 
+    Enter the number of the required scenario: 4
+    ```
 
-Choose the required scenario's number and press enter. 
+    Choose the required scenario's number and press enter. 
 
-You should see an x-terminal for each PX4 instance. 
+    You should see an x-terminal for each PX4 instance. 
 
-The MAVLink ID of the generated PX4 instances starts from 1 and increments. However, the instance numbering starts from 0. For example, instance #0 has the mavlink id #1 and instance #1 has the mavlink id #2 and so on. 
+    The MAVLink ID of the generated PX4 instances starts from 1 and increments. However, the instance numbering starts from 0. For example, instance #0 has the mavlink id #1 and instance #1 has the mavlink id #2 and so on. 
 
-Also, micrortps_client starts automatically with the following UDP ports configutation: 
+    Also, micrortps_client starts automatically with the following UDP ports configutation: 
 
-micrortps_client start -t UDP -r $((2019+2*px4_instance)) -s $((2020+2*px4_instance))  
+    micrortps_client start -t UDP -r $((2019+2*px4_instance)) -s $((2020+2*px4_instance))  
 
-For example, instance #0 receives on port 2019 and sends on UDP port 2020  
+    For example, instance #0 receives on port 2019 and sends on UDP port 2020  
 
-If you open QGC, you should see the spawned vehicles of the chosen scenario in the corresponding location. 
+    If you open QGC, you should see the spawned vehicles of the chosen scenario in the corresponding location. 
 
 
 
