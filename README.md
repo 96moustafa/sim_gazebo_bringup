@@ -3,9 +3,9 @@
 ## Overview
 Generic simulation bringup from JSON
 
-This package is a modified version of [this package](https://github.com/rudislabs/sim_gazebo_bringup) that was originally created by Rudis Labs and it launchs multiple PX4 instances in simulation.
+This package is a modified version of [this package](https://github.com/rudislabs/sim_gazebo_bringup) that was originally created by Rudis Labs and it launches multiple PX4 instances in simulation.
 
-Each scenario is described in a file called **gen_params.json**.
+A scenario is described in a file called **gen_params.json**.
 
 This file is as follows:
 ```json
@@ -61,7 +61,7 @@ This file is as follows:
 			"gazebo_name": "tii_gazebo", // gazebo to be used
 			"autopilot_name": "PX4-Autopilot-Avoidance",// autopilot to be used
 			"autopilot_build_type": "px4_sitl_rtps",
-			"spawn_pose": [0, -50, 0, 0, 0, 1.57], // (x,y,z,,,yaw) wrt lat,lon,alt of the gazebo world.
+			"spawn_pose": [0, -50, 0, 0, 0, 1.57], // (x,y,z,-,-,yaw) wrt lat,lon,alt of the gazebo world.
 			"generate_params":{
 				"base_model": "iris",
 				"sdf_version": "NotSet",
@@ -77,7 +77,7 @@ This file is as follows:
 				"model_name": "NotSet"
 			}
 		},
-		"model_params_1": {
+		"model_params_1": {// second vehicle
 			"gazebo_name": "tii_gazebo",
 			"autopilot_name": "PX4-Autopilot-Avoidance",
 			"autopilot_build_type": "px4_sitl_rtps",
@@ -105,7 +105,7 @@ This file is as follows:
 Each scenario is described using a **gen_params.json** file in a separate directory with the unique name of the scenario.
 
 ## How to use it
-1. Create your scenario by creating a directory with your scenario's name and adding a json file with the required configuation inside it.
+1. Create your scenario by creating a directory with your scenario's name and adding a json file with the required configuration inside it.
 2. Build this package in ROS2 workspace directory using the following command:
    ```
    ~/src/ros2_ws$ colcon build --symlink-install --packages-select sim_gazebo_bringup 
@@ -115,7 +115,7 @@ Each scenario is described using a **gen_params.json** file in a separate direct
     $ ros2 launch sim_gazebo_bringup sim_gazebo.launch.py 
     ```
 
-    > Note: The first time you run the sim_gazebo.launch.py, it will clone a PX4-Autopilot with some modifications and a gazebo repository from Github in the parent directory of your ros2_ws directory. Therefore, it is important to have an SSH connection to your Github account. 
+    > Note: The first time you run the sim_gazebo.launch.py, it will clone the specified PX4-Autopilot repository and the specified gazebo repository from Github in the parent directory of your ros2_ws directory. Therefore, it is important to have an SSH connection to your Github account. 
 
  4. After running the script, it will parse the scenarios directories and you will be prompted to choose a scenario by entering its corresponding number.
 

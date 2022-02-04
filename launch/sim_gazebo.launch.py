@@ -47,7 +47,7 @@ print("The available scenarios are:")
 for num, scenario in enumerate(available_scenarios):
     print("{:d}) {:s}".format(num, scenario))
 
-# prompt for the choosen scenario
+# prompt for the chosen scenario
 scenario_num = 0
 while True:
     scenario_num = int(input("Enter the number of the required scenario: "))
